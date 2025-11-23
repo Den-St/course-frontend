@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { routes } from './routes';
-import { SignIn, Registration, StudentCourses, TeacherCourses, AdminCourses, AdminStudents, AdminGroups } from './pages';
+import { SignIn, Registration, StudentCourses, TeacherCourses, AdminCourses, AdminStudents, AdminGroups, AdminTeachers, TeacherLessons } from './pages';
 import { Layout } from '../components/Layout/Layout';
 
 export const PublicRoutes = [
@@ -44,6 +44,16 @@ export const PublicRoutes = [
     key={routes.adminGroups.path}
     element={<AdminGroups />}
     path={routes.adminGroups.path}
+  />,
+  <Route
+    key={routes.adminTeachers.path}
+    element={<AdminTeachers />}
+    path={routes.adminTeachers.path}
+  />,
+  <Route
+    key={routes.teacherLessons.path}
+    element={<TeacherLessons />}
+    path={routes.teacherLessons.path}
   />,
 ];
 

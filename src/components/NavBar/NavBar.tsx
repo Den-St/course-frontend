@@ -14,6 +14,7 @@ export const NavBar = () => {
   const teacherNavItems = [
     { path: routes.homePage.path, label: 'Home' },
     { path: routes.teacherCourses.path, label: 'Courses' },
+    { path: routes.teacherLessons.path, label: 'Lessons' },
   ];
 
   const parentNavItems = [
@@ -25,6 +26,7 @@ export const NavBar = () => {
     { path: routes.adminCourses.path, label: 'Courses' },
     { path: routes.adminStudents.path, label: 'Students' },
     { path: routes.adminGroups.path, label: 'Groups' },
+    { path: routes.adminTeachers.path, label: 'Teachers' },
   ];
 
   const getNavItems = () => {

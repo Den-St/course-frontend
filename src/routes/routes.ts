@@ -31,4 +31,12 @@ export const routes = {
     path: '/admin/groups',
     getRoute: () => '/admin/groups',
   },
+  adminTeachers: {
+    path: '/admin/teachers',
+    getRoute: () => '/admin/teachers',
+  },
+  teacherLessons: {
+    path: '/teacher/lessons',
+    getRoute: () => '/teacher/lessons',
+  },
 } as const;

@@ -7,3 +7,5 @@ export const TeacherCourses = lazy(() => import('../pages/Courses/TeacherCourses
 export const AdminCourses = lazy(() => import('../pages/Courses/AdminCourses/AdminCourses'));
 export const AdminStudents = lazy(() => import('../pages/Students/AdminStudents/AdminStudents'));
 export const AdminGroups = lazy(() => import('../pages/Groups/AdminGroups/AdminGroups'));
+export const AdminTeachers = lazy(() => import('../pages/Teachers/AdminTeachers/AdminTeachers'));
+export const TeacherLessons = lazy(() => import('../pages/Lessons/TeacherLessons/TeacherLessons'));

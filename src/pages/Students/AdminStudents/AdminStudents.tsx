@@ -1,6 +1,10 @@
 import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { useSearchStudentsMutation } from '../api';
 import { useFilterGroupsQuery } from '../../Groups/api';
+import { useRegisterMutation } from '../../Registration/api';
+import { registrationSchema, type RegistrationFormData } from '../../Registration/schema';
 import type { SearchStudentRequestDto } from '../types/types';
 
 const AdminStudents = () => {
@@ -12,6 +16,19 @@ const AdminStudents = () => {
 
   const [searchStudents, { data: students, isLoading, error }] = useSearchStudentsMutation();
   const { data: groupsData } = useFilterGroupsQuery({});
+  const [register, { isLoading: isCreating }] = useRegisterMutation();
+
+  const {
+    register: registerField,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm<RegistrationFormData>({
+    resolver: zodResolver(registrationSchema),
+    defaultValues: {
+      role: 'student',
+    },
+  });
 
   useEffect(() => {
     searchStudents(searchParams);
@@ -35,10 +52,142 @@ const AdminStudents = () => {
     }));
   };
 
+  const onCreateStudent = async (data: RegistrationFormData) => {
+    try {
+      await register({ ...data, role: 'student' }).unwrap();
+      reset();
+      searchStudents(searchParams); // Refresh the list
+    } catch (error) {
+      console.error('Failed to create student:', error);
+    }
+  };
+
   return (
     <div className="p-5">
       <h1 className="text-2xl font-bold mb-6">Admin - Students Management</h1>
       
+      {/* Create Student Form */}
+      <div className="mb-8 p-6 bg-white border border-gray-300 rounded-lg shadow-sm">
+        <h2 className="text-xl font-bold mb-4">Create New Student</h2>
+        
+        <form onSubmit={handleSubmit(onCreateStudent)} className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {/* Email */}
+          <div>
+            <label className="block text-sm font-medium mb-2">Email</label>
+            <input
+              type="email"
+              {...registerField('email')}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="student@email.com"
+            />
+            {errors.email && (
+              <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>
+            )}
+          </div>
+
+          {/* Password */}
+          <div>
+            <label className="block text-sm font-medium mb-2">Password</label>
+            <input
+              type="password"
+              {...registerField('password')}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="••••••••"
+            />
+            {errors.password && (
+              <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>
+            )}
+          </div>
+
+          {/* First Name */}
+          <div>
+            <label className="block text-sm font-medium mb-2">First Name</label>
+            <input
+              type="text"
+              {...registerField('first_name')}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="John"
+            />
+            {errors.first_name && (
+              <p className="text-red-500 text-sm mt-1">{errors.first_name.message}</p>
+            )}
+          </div>
+
+          {/* Last Name */}
+          <div>
+            <label className="block text-sm font-medium mb-2">Last Name</label>
+            <input
+              type="text"
+              {...registerField('last_name')}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Doe"
+            />
+            {errors.last_name && (
+              <p className="text-red-500 text-sm mt-1">{errors.last_name.message}</p>
+            )}
+          </div>
+
+          {/* Patronym */}
+          <div>
+            <label className="block text-sm font-medium mb-2">Patronym</label>
+            <input
+              type="text"
+              {...registerField('patronym')}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Patronym"
+            />
+            {errors.patronym && (
+              <p className="text-red-500 text-sm mt-1">{errors.patronym.message}</p>
+            )}
+          </div>
+
+          {/* Phone */}
+          <div>
+            <label className="block text-sm font-medium mb-2">Phone (Optional)</label>
+            <input
+              type="tel"
+              {...registerField('phone')}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="+1234567890"
+            />
+            {errors.phone && (
+              <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+            )}
+          </div>
+
+          {/* Birth Date */}
+          <div>
+            <label className="block text-sm font-medium mb-2">Birth Date</label>
+            <input
+              type="date"
+              {...registerField('birth_date')}
+              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            />
+            {errors.birth_date && (
+              <p className="text-red-500 text-sm mt-1">{errors.birth_date.message}</p>
+            )}
+          </div>
+
+          {/* Action Buttons */}
+          <div className="md:col-span-2 flex gap-3 pt-2">
+            <button
+              type="submit"
+              disabled={isCreating}
+              className="bg-blue-600 text-white py-2 px-6 rounded-md hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+            >
+              {isCreating ? 'Creating...' : 'Create Student'}
+            </button>
+            <button
+              type="button"
+              onClick={() => reset()}
+              className="bg-gray-300 text-gray-700 py-2 px-6 rounded-md hover:bg-gray-400 transition-colors"
+            >
+              Reset
+            </button>
+          </div>
+        </form>
+      </div>
+
       <div className="mb-5">
         <div className="flex gap-2.5 mb-2.5">
           <input
