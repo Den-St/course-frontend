@@ -2,7 +2,7 @@ import { baseApi } from '../../api/baseApi';
 import type { RegisterApiReq, RegisterApiRes } from './types';
 
 const endpointsUrl = {
-  register: '/register',
+  register: '/register/register',
 } as const;
 
 export const registrationApi = baseApi.injectEndpoints({

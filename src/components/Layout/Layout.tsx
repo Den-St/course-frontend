@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 import { routes } from '../../routes/routes';
+import { Header } from '../Header/Header';
+import { NavBar } from '../NavBar/NavBar';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -7,33 +9,16 @@ interface LayoutProps {
 
 export const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <header className="bg-gray-800 text-white shadow-md">
-        <div className="container mx-auto px-4 py-4">
-          <nav className="flex items-center justify-between">
-            <Link to="/" className="text-xl font-bold hover:text-gray-300">
-              Course App
-            </Link>
-            <div className="flex gap-6">
-              <Link
-                to={routes.signIn.path}
-                className="hover:text-gray-300 transition-colors"
-              >
-                Sign In
-              </Link>
-              <Link
-                to={routes.registration.path}
-                className="hover:text-gray-300 transition-colors"
-              >
-                Registration
-              </Link>
-            </div>
-          </nav>
-        </div>
-      </header>
-      <main className="flex-1 container mx-auto px-4 py-8">
-        {children}
-      </main>
+    <div className="min-h-screen flex flex-col pt-16">
+      <Header />
+      <div className="flex flex-1">
+        <NavBar />
+        <main className="flex-1 ml-64 p-8 overflow-y-auto">
+          <div className="container mx-auto">
+            {children}
+          </div>
+        </main>
+      </div>
     </div>
   );
 };

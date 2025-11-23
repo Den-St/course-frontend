@@ -6,6 +6,7 @@ import { registrationSchema, type RegistrationFormData } from './schema';
 import { useRegisterMutation } from './api';
 import type { UserRole } from './types';
 import { routes } from '../../routes/routes';
+import { accessTokenKey, setToken } from '../../helpers/tokenHandlers';
 
 const Registration = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const Registration = () => {
     try {
       const result = await register(data).unwrap();
       if (result.success && result.token) {
-        localStorage.setItem('token', result.token);
+        setToken(accessTokenKey, result.token);
         navigate(routes.homePage.getRoute());
       }
     } catch (error) {
@@ -146,7 +147,17 @@ const Registration = () => {
             <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
           )}
         </div>
-
+        {selectedRole === 'student'&& <div>
+          <label className="block text-sm font-medium mb-2">Birth Date</label>
+          <input
+            type="date"
+            {...registerField('birth_date')}
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          />
+          {errors.birth_date && (
+            <p className="text-red-500 text-sm mt-1">{errors.birth_date.message}</p>
+          )}
+        </div>}
         {/* Teacher-specific fields */}
         {selectedRole === 'teacher' && (
           <>
