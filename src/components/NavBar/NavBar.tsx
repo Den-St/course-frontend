@@ -9,16 +9,27 @@ export const NavBar = () => {
   const studentNavItems = [
     { path: routes.homePage.path, label: 'Home' },
     { path: routes.studentCourses.path, label: 'Courses' },
+    { path: routes.studentLessons.path, label: 'Lessons' },
+    { path: routes.studentAssignments.path, label: 'Assignments' },
+    { path: routes.studentSubmissions.path, label: 'Submissions' },
   ];
 
   const teacherNavItems = [
     { path: routes.homePage.path, label: 'Home' },
     { path: routes.teacherCourses.path, label: 'Courses' },
     { path: routes.teacherLessons.path, label: 'Lessons' },
+    { path: routes.teacherAssignments.path, label: 'Assignments' },
+    { path: routes.teacherSubmissions.path, label: 'Submissions' },
   ];
 
   const parentNavItems = [
     { path: routes.homePage.path, label: 'Home' },
+    { path: routes.parentStudents.path, label: 'Students' },
+    { path: routes.parentsAttendances.path, label: 'Attendances' },
+    { path: routes.parentsLessons.path, label: 'Lessons' },
+    { path: routes.parentsAssignments.path, label: 'Assignments' },
+    { path: routes.parentsTuitionFees.path, label: 'Tuition Fees' },
+    { path: routes.parentsPayments.path, label: 'Payments' },
   ];
 
   const adminNavItems = [
@@ -27,6 +38,12 @@ export const NavBar = () => {
     { path: routes.adminStudents.path, label: 'Students' },
     { path: routes.adminGroups.path, label: 'Groups' },
     { path: routes.adminTeachers.path, label: 'Teachers' },
+  ];
+
+  const accountantNavItems = [
+    { path: routes.homePage.path, label: 'Home' },
+    { path: routes.accountantTuitionFees.path, label: 'Tuition Fees' },
+    { path: routes.accountantPayments.path, label: 'Payments' },
   ];
 
   const getNavItems = () => {
@@ -41,6 +58,8 @@ export const NavBar = () => {
         return parentNavItems;
       case 'admin':
         return adminNavItems;
+      case 'accountant':
+        return accountantNavItems;
       default:
         return studentNavItems;
     }
@@ -49,7 +68,7 @@ export const NavBar = () => {
   const navItems = getNavItems();
 
   const isActive = (path: string) => location.pathname === path;
-
+  if (!user?.role) return;
   return (
     <aside className="w-64 bg-gray-100 border-r border-gray-200 fixed left-0 top-16 bottom-0 overflow-y-auto">
       <nav className="p-4">

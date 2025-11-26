@@ -7,7 +7,7 @@ const StudentCourses = () => {
   const { data: userData } = useGetMe();
   const user = userData?.data;
   const { data: coursesData, isLoading, error } = useGetCoursesByStudentQuery(
-    { studentId: user?.id || 0 },
+    { studentId: user?.student_id || 0 },
     { skip: !user?.id }
   );
   console.log('coursesData',coursesData);

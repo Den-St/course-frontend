@@ -55,7 +55,7 @@ export interface StudentLessonDto {
   topic: string;
 }
 
-export type GetLessonsForStudentResponseDto = StudentLessonDto[];
+export type GetLessonsForStudentResponseDto = {data: StudentLessonDto[]};
 
 export interface CreateLessonRequestDto {
   course_id: number;

@@ -39,4 +39,68 @@ export const routes = {
     path: '/teacher/lessons',
     getRoute: () => '/teacher/lessons',
   },
+  teacherAssignments: {
+    path: '/teacher/assignments',
+    getRoute: () => '/teacher/assignments',
+  },
+  teacherSubmissions: {
+    path: '/teacher/submissions',
+    getRoute: () => '/teacher/submissions',
+  },
+  teacherSubmission: {
+    path: '/teacher/submissions/:id',
+    getRoute: (id: number | string) => `/teacher/submissions/${id}`,
+  },
+  studentLessons: {
+    path: '/student/lessons',
+    getRoute: () => '/student/lessons',
+  },
+  studentAssignments: {
+    path: '/student/assignments',
+    getRoute: () => '/student/assignments',
+  },
+  studentAssignment: {
+    path: '/student/assignments/:id',
+    getRoute: (id: number | string) => `/student/assignments/${id}`,
+  },
+  studentSubmissions: {
+    path: '/student/submissions',
+    getRoute: () => '/student/submissions',
+  },
+  accountantTuitionFees: {
+    path: '/accountant/tuition-fees',
+    getRoute: () => '/accountant/tuition-fees',
+  },
+  accountantPayments: {
+    path: '/accountant/payments',
+    getRoute: () => '/accountant/payments',
+  },
+  parentStudents: {
+    path: '/parents/students',
+    getRoute: () => '/parents/students',
+  },
+  parentsAttendances: {
+    path: '/parents/attendances',
+    getRoute: () => '/parents/attendances',
+  },
+  parentsLessons: {
+    path: '/parents/lessons',
+    getRoute: () => '/parents/lessons',
+  },
+  parentsAssignments: {
+    path: '/parents/assignments',
+    getRoute: () => '/parents/assignments',
+  },
+  parentsAssignment: {
+    path: '/parents/assignments/:id',
+    getRoute: (id: number | string) => `/parents/assignments/${id}`,
+  },
+  parentsTuitionFees: {
+    path: '/parents/tuition-fees',
+    getRoute: () => '/parents/tuition-fees',
+  },
+  parentsPayments: {
+    path: '/parents/payments',
+    getRoute: () => '/parents/payments',
+  },
 } as const;
