@@ -16,6 +16,7 @@ export interface StudentResponseDto {
   phone: string | null;
   birth_date: Date | null;
   group_id: number | null;
+  group_name?: string;
   created_at: Date;
   updated_at: Date;
 }
@@ -50,4 +51,12 @@ export interface UpdateStudentResponseDto {
 
 export interface UpdateStudentParams {
   id: number;
+}
+
+export interface GetStudentsByTeacherEnrollmentsRequestDto {
+  teacher_id: number;
+}
+
+export interface GetStudentsByTeacherEnrollmentsResponseDto {
+  students: StudentResponseDto[];
 }

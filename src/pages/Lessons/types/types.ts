@@ -38,8 +38,6 @@ export interface StudentLessonDto {
     id: number;
     name: string;
     description: string;
-    mandatory: boolean;
-    grade_level: number;
   };
   teacher: {
     id: number;
@@ -72,8 +70,6 @@ export interface CreateLessonResponseDto {
     id: number;
     name: string;
     description: string;
-    mandatory: boolean;
-    grade_level: number;
     teacher_id: number;
   };
   teacher: {

@@ -25,3 +25,4 @@ export const ParentsAssignments = lazy(() => import('../pages/Assignments/Parent
 export const ParentsAssignment = lazy(() => import('../pages/Assignments/ParentsAssignment/ParentsAssignment'));
 export const ParentsTuitionFees = lazy(() => import('../pages/TuitionFees/ParentsTuitionFees/ParentsTuitionFees'));
 export const ParentsPayments = lazy(() => import('../pages/Payments/ParentsPayments/ParentsPayments'));
+export const TeacherAttendances = lazy(() => import('../pages/Attendances/TeacherAttendances/TeacherAttendances'));

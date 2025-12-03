@@ -35,14 +35,14 @@ const TeacherSubmission = () => {
     { submissionId: Number(id) },
     { skip: !id }
   );
-  console.log('feedbacksData',feedbacksData);
+  console.log('filterSubmissions',submissionsData);
   const [createFeedback, { isLoading: isCreatingFeedback }] = useCreateSubmissionFeedbackMutation();
   const [updateFeedback, { isLoading: isUpdatingFeedback }] = useUpdateSubmissionFeedbackMutation();
   const [createGrade, { isLoading: isCreatingGrade }] = useCreateGradeMutation();
   const [updateGrade, { isLoading: isUpdatingGrade }] = useUpdateGradeMutation();
 
   const submission = submissionsData?.data?.[0];
-  const existingFeedback = feedbacksData?.data?.[0];
+  const existingFeedback = submissionsData?.data?.[0]?.submissionFeedback;
   const existingGrade = submission?.grade;
 
   const {
@@ -136,7 +136,6 @@ const TeacherSubmission = () => {
         }
         await createGrade({
           submission_id: Number(id),
-          teacher_id: user?.id,
           grade: data.grade,
         }).unwrap();
       }
@@ -466,20 +465,20 @@ const TeacherSubmission = () => {
                     </p>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {/* <label className="block text-sm font-medium text-gray-700 mb-1">
                       Provided By
                     </label>
                     <p className="text-gray-900">
-                      {existingFeedback.teacher.first_name} {existingFeedback.teacher.last_name}
-                    </p>
+                      {submission..teacher.first_name} {existingFeedback.teacher.last_name}
+                    </p> */}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {/* <label className="block text-sm font-medium text-gray-700 mb-1">
                       Date
                     </label>
                     <p className="text-gray-900">
                       {new Date(existingFeedback.feedback_date).toLocaleString()}
-                    </p>
+                    </p> */}
                   </div>
                 </div>
               )}

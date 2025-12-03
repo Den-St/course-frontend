@@ -7,7 +7,6 @@ export const NavBar = () => {
   const { data } = useGetMe();
   const user = data?.data;
   const studentNavItems = [
-    { path: routes.homePage.path, label: 'Home' },
     { path: routes.studentCourses.path, label: 'Courses' },
     { path: routes.studentLessons.path, label: 'Lessons' },
     { path: routes.studentAssignments.path, label: 'Assignments' },
@@ -15,15 +14,14 @@ export const NavBar = () => {
   ];
 
   const teacherNavItems = [
-    { path: routes.homePage.path, label: 'Home' },
     { path: routes.teacherCourses.path, label: 'Courses' },
     { path: routes.teacherLessons.path, label: 'Lessons' },
     { path: routes.teacherAssignments.path, label: 'Assignments' },
     { path: routes.teacherSubmissions.path, label: 'Submissions' },
+    { path: routes.teacherAttendances.path, label: 'Attendances' },
   ];
 
   const parentNavItems = [
-    { path: routes.homePage.path, label: 'Home' },
     { path: routes.parentStudents.path, label: 'Students' },
     { path: routes.parentsAttendances.path, label: 'Attendances' },
     { path: routes.parentsLessons.path, label: 'Lessons' },
@@ -33,7 +31,6 @@ export const NavBar = () => {
   ];
 
   const adminNavItems = [
-    { path: routes.homePage.path, label: 'Home' },
     { path: routes.adminCourses.path, label: 'Courses' },
     { path: routes.adminStudents.path, label: 'Students' },
     { path: routes.adminGroups.path, label: 'Groups' },
@@ -41,7 +38,6 @@ export const NavBar = () => {
   ];
 
   const accountantNavItems = [
-    { path: routes.homePage.path, label: 'Home' },
     { path: routes.accountantTuitionFees.path, label: 'Tuition Fees' },
     { path: routes.accountantPayments.path, label: 'Payments' },
   ];

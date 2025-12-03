@@ -103,4 +103,8 @@ export const routes = {
     path: '/parents/payments',
     getRoute: () => '/parents/payments',
   },
+  teacherAttendances: {
+    path: '/teacher/attendances',
+    getRoute: () => '/teacher/attendances',
+  },
 } as const;

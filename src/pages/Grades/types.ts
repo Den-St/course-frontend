@@ -1,6 +1,5 @@
 export interface CreateGradeRequestDto {
   submission_id: number;
-  teacher_id?: number;
   grade?: number;
 }
 

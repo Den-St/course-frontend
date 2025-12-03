@@ -1,6 +1,8 @@
 export interface FindAttendanceRequestDto {
   group_id?: number;
   student_id?: number;
+  lesson_id?: number;
+  course_id?: number;
   start_date?: string;
   end_date?: string;
 }

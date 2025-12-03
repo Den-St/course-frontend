@@ -96,9 +96,6 @@ const StudentLessons = () => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
                     Time
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
-                    Mandatory
-                  </th>
                 </tr>
               </thead>
 
@@ -113,10 +110,6 @@ const StudentLessons = () => {
                       {lesson.course.name}
                     </td>
 
-                    <td className="px-6 py-4 text-sm text-gray-900">
-                      {lesson.course.grade_level}
-                    </td>
-
                     <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">
                       {lesson.teacher.last_name} {lesson.teacher.first_name}{' '}
                       {lesson.teacher.patronym}
@@ -128,18 +121,6 @@ const StudentLessons = () => {
 
                     <td className="px-6 py-4 text-sm text-gray-900 whitespace-nowrap">
                       {lesson.start_time} – {lesson.end_time}
-                    </td>
-
-                    <td className="px-6 py-4 text-sm whitespace-nowrap">
-                      {lesson.course.mandatory ? (
-                        <span className="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
-                          Mandatory
-                        </span>
-                      ) : (
-                        <span className="px-2 py-1 text-xs rounded-full bg-gray-100 text-gray-600">
-                          Optional
-                        </span>
-                      )}
                     </td>
                   </tr>
                 ))}

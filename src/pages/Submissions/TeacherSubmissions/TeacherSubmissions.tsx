@@ -3,12 +3,29 @@ import { useNavigate } from 'react-router-dom';
 import { useFilterSubmissionsMutation } from '../api';
 import type { FilterSubmissionRequestDto } from '../types/types';
 import { routes } from '../../../routes/routes';
+import { useFilterAssignmentsQuery } from '../../Assignments/api';
+import { useGetMe } from '../../../api/authMe';
+import { useFilterGroupsByTeacherEnrollmentsQuery } from '../../Groups/api';
+import { useFilterStudentsByTeacherEnrollmentsQuery } from '../../Students/api';
 
 const TeacherSubmissions = () => {
-  const [filters, setFilters] = useState<FilterSubmissionRequestDto>({});
+ 
   const navigate = useNavigate();
-
+  const { data: currentUser } = useGetMe();
+  console.log('currentUser',currentUser);
+  const [filters, setFilters] = useState<FilterSubmissionRequestDto>({
+    teacher_id: currentUser?.data.id!
+  });
   const [filterSubmissions, { data: submissions, isLoading, error }] = useFilterSubmissionsMutation();
+  const { data: teacherAssignments } = useFilterAssignmentsQuery(
+    { teacher_id: currentUser?.data.id! },
+  );
+  const { data: teacherGroups } = useFilterGroupsByTeacherEnrollmentsQuery(
+    { teacher_id: currentUser?.data.id! },
+  );
+  const { data: teacherStudents } = useFilterStudentsByTeacherEnrollmentsQuery(
+    { teacher_id: currentUser?.data.id! },
+  );
 
   useEffect(() => {
     filterSubmissions(filters);
@@ -29,7 +46,8 @@ const TeacherSubmissions = () => {
     navigate(routes.teacherSubmission.getRoute(id));
   };
 
-  console.log('submissions', submissions);
+
+  console.log('teacherAssignments', teacherAssignments);
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Student Submissions</h1>
@@ -39,54 +57,71 @@ const TeacherSubmissions = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Assignment ID
+              Assignment
             </label>
-            <input
-              type="number"
+            <select
               value={filters.assignment_id ?? ''}
-              onChange={(e) => handleFilterChange('assignment_id', e.target.value ? Number(e.target.value) : undefined)}
+              onChange={(e) =>
+                handleFilterChange(
+                  'assignment_id',
+                  e.target.value ? Number(e.target.value) : undefined
+                )
+              }
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              placeholder="Enter assignment ID"
-            />
+            >
+              <option value="">All Assignments</option>
+              {teacherAssignments?.data.map((a) => (
+                <option key={a.id} value={a.id}>
+                  {a.title} (#{a.id})
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Student ID
+              Student
             </label>
-            <input
-              type="number"
+            <select
               value={filters.student_id ?? ''}
-              onChange={(e) => handleFilterChange('student_id', e.target.value ? Number(e.target.value) : undefined)}
+              onChange={(e) =>
+                handleFilterChange(
+                  'student_id',
+                  e.target.value ? Number(e.target.value) : undefined
+                )
+              }
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              placeholder="Enter student ID"
-            />
+            >
+              <option value="">All Students</option>
+              {teacherStudents?.students.map((s) => (
+                <option key={s.id} value={s.id}>
+                  {s.first_name} {s.last_name} (#{s.id})
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
-              Group ID
+              Group
             </label>
-            <input
-              type="number"
+            <select
               value={filters.group_id ?? ''}
-              onChange={(e) => handleFilterChange('group_id', e.target.value ? Number(e.target.value) : undefined)}
+              onChange={(e) =>
+                handleFilterChange(
+                  'group_id',
+                  e.target.value ? Number(e.target.value) : undefined
+                )
+              }
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              placeholder="Enter group ID"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
-              Teacher ID
-            </label>
-            <input
-              type="number"
-              value={filters.teacher_id ?? ''}
-              onChange={(e) => handleFilterChange('teacher_id', e.target.value ? Number(e.target.value) : undefined)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              placeholder="Enter teacher ID"
-            />
+            >
+              <option value="">All Groups</option>
+              {teacherGroups?.groups.map((g) => (
+                <option key={g.id} value={g.id}>
+                  {g.name} (#{g.id})
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>
@@ -120,8 +155,17 @@ const TeacherSubmissions = () => {
               Is Late
             </label>
             <select
-              value={filters.is_late === undefined ? '' : filters.is_late.toString()}
-              onChange={(e) => handleFilterChange('is_late', e.target.value === '' ? undefined : e.target.value === 'true')}
+              value={
+                filters.is_late === undefined ? '' : filters.is_late.toString()
+              }
+              onChange={(e) =>
+                handleFilterChange(
+                  'is_late',
+                  e.target.value === ''
+                    ? undefined
+                    : e.target.value === 'true'
+                )
+              }
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
             >
               <option value="">All</option>
@@ -135,8 +179,19 @@ const TeacherSubmissions = () => {
               Feedback Given
             </label>
             <select
-              value={filters.feedback_given === undefined ? '' : filters.feedback_given.toString()}
-              onChange={(e) => handleFilterChange('feedback_given', e.target.value === '' ? undefined : e.target.value === 'true')}
+              value={
+                filters.feedback_given === undefined
+                  ? ''
+                  : filters.feedback_given.toString()
+              }
+              onChange={(e) =>
+                handleFilterChange(
+                  'feedback_given',
+                  e.target.value === ''
+                    ? undefined
+                    : e.target.value === 'true'
+                )
+              }
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
             >
               <option value="">All</option>
@@ -152,7 +207,9 @@ const TeacherSubmissions = () => {
             <input
               type="date"
               value={filters.submitted_from ?? ''}
-              onChange={(e) => handleFilterChange('submitted_from', e.target.value)}
+              onChange={(e) =>
+                handleFilterChange('submitted_from', e.target.value)
+              }
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
           </div>
@@ -164,7 +221,9 @@ const TeacherSubmissions = () => {
             <input
               type="date"
               value={filters.submitted_to ?? ''}
-              onChange={(e) => handleFilterChange('submitted_to', e.target.value)}
+              onChange={(e) =>
+                handleFilterChange('submitted_to', e.target.value)
+              }
               className="w-full px-3 py-2 border border-gray-300 rounded-md"
             />
           </div>

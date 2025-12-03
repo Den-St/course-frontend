@@ -22,7 +22,7 @@ const TeacherAssignments: FC = () => {
 
   const [createAssignment, { isLoading, isSuccess, isError, error }] = useCreateAssignmentMutation();
   const [updateAssignment, { isLoading: isUpdating, isSuccess: isUpdateSuccess, isError: isUpdateError, error: updateError }] = useUpdateAssignmentMutation();
-  const { data: coursesData, isLoading: isLoadingCourses } = useFilterCoursesQuery({});
+  const { data: coursesData, isLoading: isLoadingCourses } = useFilterCoursesQuery({teacher_id: teacherId});
   const { data: assignments, isLoading: isLoadingAssignments } = useFilterAssignmentsQuery(
     { teacher_id: teacherId, ...filterParams },
     { skip: !teacherId }
@@ -456,7 +456,6 @@ const TeacherAssignments: FC = () => {
                     <th className="p-3 text-left">Assign Date</th>
                     <th className="p-3 text-left">Due Date</th>
                     <th className="p-3 text-left">Max Grade</th>
-                    <th className="p-3 text-left">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -468,14 +467,6 @@ const TeacherAssignments: FC = () => {
                       <td className="p-3">{formatDate(assignment.assign_date)}</td>
                       <td className="p-3">{formatDate(assignment.due_date)}</td>
                       <td className="p-3">{assignment.max_grade}</td>
-                      <td className="p-3">
-                        <button
-                          onClick={() => handleEdit(assignment)}
-                          className="text-blue-600 hover:text-blue-800 font-medium"
-                        >
-                          Edit
-                        </button>
-                      </td>
                     </tr>
                   ))}
                 </tbody>

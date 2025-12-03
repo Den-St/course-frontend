@@ -33,9 +33,6 @@ const AdminCourses = () => {
     reset,
   } = useForm<CreateCourseFormData>({
     resolver: zodResolver(createCourseSchema),
-    defaultValues: {
-      mandatory: false,
-    },
   });
 
   const onSubmit = async (data: CreateCourseFormData) => {
@@ -94,23 +91,6 @@ const AdminCourses = () => {
           </div>
 
           <div>
-            <label htmlFor="grade_level" className="block text-sm font-medium text-gray-700 mb-1">
-              Grade Level (1-12)
-            </label>
-            <input
-              id="grade_level"
-              type="number"
-              min="1"
-              max="12"
-              {...register('grade_level', { valueAsNumber: true })}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            {errors.grade_level && (
-              <p className="text-red-500 text-sm mt-1">{errors.grade_level.message}</p>
-            )}
-          </div>
-
-          <div>
             <label htmlFor="teacher_id" className="block text-sm font-medium text-gray-700 mb-1">
               Teacher
             </label>
@@ -130,18 +110,6 @@ const AdminCourses = () => {
             {errors.teacher_id && (
               <p className="text-red-500 text-sm mt-1">{errors.teacher_id.message}</p>
             )}
-          </div>
-
-          <div className="flex items-center">
-            <input
-              id="mandatory"
-              type="checkbox"
-              {...register('mandatory')}
-              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
-            />
-            <label htmlFor="mandatory" className="ml-2 block text-sm text-gray-700">
-              Mandatory Course
-            </label>
           </div>
 
           <div className="pt-4">
@@ -215,7 +183,6 @@ const AdminCourses = () => {
                     <th className="p-3 text-left">Name</th>
                     <th className="p-3 text-left">Description</th>
                     <th className="p-3 text-left">Grade Level</th>
-                    <th className="p-3 text-left">Mandatory</th>
                     <th className="p-3 text-left">Teacher</th>
                     <th className="p-3 text-left">Enrollments</th>
                   </tr>
@@ -226,16 +193,6 @@ const AdminCourses = () => {
                       <td className="p-3">{course.id}</td>
                       <td className="p-3 font-medium">{course.name}</td>
                       <td className="p-3">{course.description || '-'}</td>
-                      <td className="p-3">{course.grade_level || '-'}</td>
-                      <td className="p-3">
-                        <span className={`px-2 py-1 rounded text-xs ${
-                          course.mandatory 
-                            ? 'bg-blue-100 text-blue-800' 
-                            : 'bg-gray-100 text-gray-800'
-                        }`}>
-                          {course.mandatory ? 'Yes' : 'No'}
-                        </span>
-                      </td>
                       <td className="p-3">
                         {course.teacher 
                           ? formatFullName(course.teacher.first_name, course.teacher.last_name)

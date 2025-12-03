@@ -15,6 +15,12 @@ const endpointsUrl = {
     if (params.student_id !== undefined) {
       searchParams.append('student_id', params.student_id.toString());
     }
+    if (params.lesson_id !== undefined) {
+      searchParams.append('lesson_id', params.lesson_id.toString());
+    }
+    if (params.course_id !== undefined) {
+      searchParams.append('course_id', params.course_id.toString());
+    }
     if (params.start_date) {
       searchParams.append('start_date', params.start_date);
     }

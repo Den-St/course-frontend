@@ -1,8 +1,6 @@
 export type CreateCourseRequestDto = {
   name: string;
   description?: string;
-  mandatory?: boolean;
-  grade_level?: number;
   teacher_id?: number;
 };
 
@@ -10,8 +8,6 @@ export type CreateCourseResponseDto = {
   id: number;
   name: string;
   description: string | null;
-  mandatory: boolean;
-  grade_level: number | null;
   teacher_id: number | null;
 };
 
@@ -24,8 +20,6 @@ export type AssignTeacherResponseDto = {
   id: number;
   name: string;
   description: string | null;
-  mandatory: boolean;
-  grade_level: number | null;
   teacher_id: number;
 };
 
@@ -41,8 +35,6 @@ export type CourseResponseDto = {
   id: number;
   name: string;
   description: string | null;
-  mandatory: boolean;
-  grade_level: number | null;
   teacher_id: number | null;
   teacher?: {
     id: number;
@@ -63,8 +55,6 @@ export type FilteredCourseResponseDto = {
   id: number;
   name: string;
   description: string | null;
-  mandatory: boolean;
-  grade_level: number | null;
   teacher_id: number | null;
   enrollment_count: number;
   teacher?: {

@@ -49,11 +49,6 @@ const StudentCourses = () => {
                 <h2 className="text-xl font-semibold text-gray-900">
                   {course.name}
                 </h2>
-                {course.mandatory && (
-                  <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
-                    Required
-                  </span>
-                )}
               </div>
               
               {course.description && (
@@ -63,13 +58,6 @@ const StudentCourses = () => {
               )}
               
               <div className="space-y-2 text-sm">
-                {course.grade_level && (
-                  <div className="flex items-center text-gray-700">
-                    <span className="font-medium">Grade Level:</span>
-                    <span className="ml-2">{course.grade_level}</span>
-                  </div>
-                )}
-                
                 {course.teacher && (
                   <div className="flex items-center text-gray-700">
                     <span className="font-medium">Teacher:</span>

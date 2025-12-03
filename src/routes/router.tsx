@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { routes } from './routes';
-import { SignIn, Registration, StudentCourses, TeacherCourses, AdminCourses, AdminStudents, AdminGroups, AdminTeachers, TeacherLessons, TeacherAssignments, TeacherSubmissions, TeacherSubmission, StudentLessons, StudentAssignments, StudentAssignment, StudentSubmissions, AccountantTuitionFees, AccountantPayments, ParentStudents, ParentsAttendances, ParentsLessons, ParentsAssignments, ParentsAssignment, ParentsTuitionFees, ParentsPayments } from './pages';
+import { SignIn, Registration, StudentCourses, TeacherCourses, AdminCourses, AdminStudents, AdminGroups, AdminTeachers, TeacherLessons, TeacherAssignments, TeacherSubmissions, TeacherSubmission, StudentLessons, StudentAssignments, StudentAssignment, StudentSubmissions, AccountantTuitionFees, AccountantPayments, ParentStudents, ParentsAttendances, ParentsLessons, ParentsAssignments, ParentsAssignment, ParentsTuitionFees, ParentsPayments, TeacherAttendances } from './pages';
 import { Layout } from '../components/Layout/Layout';
 
 export const PublicRoutes = [
@@ -134,6 +134,11 @@ export const PublicRoutes = [
     key={routes.parentsPayments.path}
     element={<ParentsPayments />}
     path={routes.parentsPayments.path}
+  />,
+  <Route
+    key={routes.teacherAttendances.path}
+    element={<TeacherAttendances />}
+    path={routes.teacherAttendances.path}
   />,
 ];
 

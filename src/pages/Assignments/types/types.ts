@@ -73,6 +73,7 @@ export interface GetAssignmentsForStudentGroupRequestDto {
   student_id: number;
   start_date?: string;
   end_date?: string;
+  course_id?: number;
 }
 
 export interface StudentGroupAssignmentsResponseDto {

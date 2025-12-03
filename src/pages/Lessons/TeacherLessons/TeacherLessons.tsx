@@ -17,7 +17,9 @@ const TeacherLessons: FC = () => {
   }>({});
 
   const [createLesson, { isLoading, isSuccess, isError, error }] = useCreateLessonMutation();
-  const { data: coursesData, isLoading: isLoadingCourses } = useFilterCoursesQuery({});
+  const { data: coursesData, isLoading: isLoadingCourses } = useFilterCoursesQuery({
+    teacher_id: user?.id!,
+  });
   const { data: lessonsData, isLoading: isLoadingLessons } = useGetLessonsForTeacherQuery(
     {
       teacher_id: user?.id || 0,

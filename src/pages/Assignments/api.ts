@@ -23,6 +23,9 @@ const endpointsUrl = {
     if (params.end_date !== undefined) {
       searchParams.append('end_date', params.end_date);
     }
+    if (params.course_id !== undefined) {
+      searchParams.append('course_id', params.course_id.toString());
+    }
     return `/assignments/student-group?${searchParams.toString()}`;
   },
   filterAssignments: (params: GetAssignmentsFilterRequestDto) => {

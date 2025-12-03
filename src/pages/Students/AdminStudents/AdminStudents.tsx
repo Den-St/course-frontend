@@ -242,26 +242,20 @@ const AdminStudents = () => {
             <thead>
               <tr className="border-b-2 border-gray-300">
                 <th className="p-2.5 text-left">ID</th>
-                <th className="p-2.5 text-left">Student ID</th>
                 <th className="p-2.5 text-left">First Name</th>
                 <th className="p-2.5 text-left">Last Name</th>
                 <th className="p-2.5 text-left">patronym</th>
                 <th className="p-2.5 text-left">Group</th>
-                <th className="p-2.5 text-left">Actions</th>
               </tr>
             </thead>
             <tbody>
               {students.students.map((student) => (
                 <tr key={student.id} className="border-b border-gray-300">
                   <td className="p-2.5">{student.id}</td>
-                  <td className="p-2.5">{student.student_id}</td>
                   <td className="p-2.5">{student.first_name}</td>
                   <td className="p-2.5">{student.last_name}</td>
                   <td className="p-2.5">{student.patronym || '-'}</td>
-                  <td className="p-2.5">{student.group_id}</td>
-                  <td className="p-2.5">
-                    <button>Edit</button>
-                  </td>
+                  <td className="p-2.5">{student.group_name}</td>
                 </tr>
               ))}
             </tbody>

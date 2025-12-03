@@ -9,7 +9,6 @@ import { formatFullName } from '../../../helpers/formatFullName';
 const AdminGroups: FC = () => {
   const [filterParams, setFilterParams] = useState<{
     name?: string;
-    grade_level?: number;
     start_year?: number;
     curator_id?: number;
   }>({});
@@ -42,7 +41,7 @@ const AdminGroups: FC = () => {
   const handleFilterChange = (field: keyof typeof filterParams, value: string) => {
     setFilterParams(prev => ({
       ...prev,
-      [field]: value ? (field === 'grade_level' || field === 'start_year' ? Number(value) : value) : undefined,
+      [field]: value ? (field === 'start_year' ? Number(value) : value) : undefined,
     }));
   };
 
@@ -67,24 +66,6 @@ const AdminGroups: FC = () => {
             />
             {errors.name && (
               <p className="mt-1 text-sm text-red-600">{errors.name.message}</p>
-            )}
-          </div>
-
-          <div>
-            <label htmlFor="grade_level" className="block text-sm font-medium text-gray-700 mb-1">
-              Grade Level *
-            </label>
-            <input
-              id="grade_level"
-              type="number"
-              {...register('grade_level', { valueAsNumber: true })}
-              className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
-              placeholder="Enter grade level (1-11)"
-              min="1"
-              max="11"
-            />
-            {errors.grade_level && (
-              <p className="mt-1 text-sm text-red-600">{errors.grade_level.message}</p>
             )}
           </div>
 
@@ -171,22 +152,6 @@ const AdminGroups: FC = () => {
           </div>
 
           <div>
-            <label htmlFor="filter_grade" className="block text-sm font-medium text-gray-700 mb-1">
-              Grade Level
-            </label>
-            <input
-              id="filter_grade"
-              type="number"
-              min="1"
-              max="11"
-              value={filterParams.grade_level || ''}
-              onChange={(e) => handleFilterChange('grade_level', e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Filter by grade"
-            />
-          </div>
-
-          <div>
             <label htmlFor="filter_year" className="block text-sm font-medium text-gray-700 mb-1">
               Start Year
             </label>
@@ -236,7 +201,6 @@ const AdminGroups: FC = () => {
                   <tr className="border-b-2 border-gray-300 bg-gray-50">
                     <th className="p-3 text-left">ID</th>
                     <th className="p-3 text-left">Name</th>
-                    <th className="p-3 text-left">Grade Level</th>
                     <th className="p-3 text-left">Start Year</th>
                     <th className="p-3 text-left">Curator</th>
                     <th className="p-3 text-left">Students</th>
@@ -247,7 +211,6 @@ const AdminGroups: FC = () => {
                     <tr key={group.id} className="border-b border-gray-200 hover:bg-gray-50">
                       <td className="p-3">{group.id}</td>
                       <td className="p-3 font-medium">{group.name}</td>
-                      <td className="p-3">{group.grade_level}</td>
                       <td className="p-3">{group.start_year}</td>
                       <td className="p-3">{group.curator_name || '-'}</td>
                       <td className="p-3">{group.student_count}</td>

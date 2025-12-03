@@ -3,15 +3,23 @@ import { useNavigate } from 'react-router-dom';
 import { useGetMe } from '../../../api/authMe/hooks/useGetMe';
 import { useGetAssignmentsForStudentGroupQuery } from '../api';
 import { routes } from '../../../routes/routes';
+import { useGetCoursesByStudentQuery } from '../../Courses/api';
 
 const StudentAssignments = () => {
   const navigate = useNavigate();
   const [dateFrom, setDateFrom] = useState<string>('');
   const [dateTo, setDateTo] = useState<string>('');
+  const [selectedCourseId, setSelectedCourseId] = useState<number | ''>('');
 
   const { data: currentUser, isLoading: loadingUser } = useGetMe();
   const studentIdentifier = currentUser?.data?.student_id;
   console.log('Student ID:', currentUser?.data);
+
+  const { data: coursesData } = useGetCoursesByStudentQuery(
+    { studentId: studentIdentifier! },
+    { skip: !studentIdentifier }
+  );
+
   const { 
     data: assignmentsData, 
     isLoading: loadingAssignments, 
@@ -22,6 +30,7 @@ const StudentAssignments = () => {
       student_id: studentIdentifier!,
       start_date: dateFrom || undefined,
       end_date: dateTo || undefined,
+      course_id: selectedCourseId === '' ? undefined : Number(selectedCourseId),
     },
     {
       skip: !studentIdentifier,
@@ -31,6 +40,7 @@ const StudentAssignments = () => {
   const handleClearFilters = () => {
     setDateFrom('');
     setDateTo('');
+    setSelectedCourseId('');
   };
 
   if (loadingUser) {
@@ -82,7 +92,7 @@ const StudentAssignments = () => {
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-5 mb-6">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-gray-800">Date Range Filter</h2>
-          {(dateFrom || dateTo) && (
+          {(dateFrom || dateTo || selectedCourseId !== '') && (
             <button
               onClick={handleClearFilters}
               className="text-sm text-blue-600 hover:text-blue-800 font-medium"
@@ -92,7 +102,7 @@ const StudentAssignments = () => {
           )}
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
               From Date
@@ -115,6 +125,26 @@ const StudentAssignments = () => {
               onChange={(e) => setDateTo(e.target.value)}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
             />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Course
+            </label>
+            <select
+              value={selectedCourseId}
+              onChange={(e) =>
+                setSelectedCourseId(e.target.value === '' ? '' : Number(e.target.value))
+              }
+              className="w-full px-3 py-2 border border-gray-300 rounded-md bg-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+            >
+              <option value="">All courses</option>
+              {coursesData?.map((course) => (
+                <option key={course.id} value={course.id}>
+                  {course.name}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
       </div>
